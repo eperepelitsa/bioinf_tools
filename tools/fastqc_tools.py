@@ -47,7 +47,7 @@ def check_length(sequence : str, len_min : int | float, len_max : int | float) -
 
 def check_quality(quality_str : str, quality_threshold : int | float) -> bool:
     """
-    Calculates average sequence quality and checks
+    Calculates average sequence quality and checks 
     whether it's acceptable depending on the threshold.
 
     Arguments:
@@ -78,7 +78,7 @@ def read_fastq(input_fastq : str) -> dict:
         while True:
             seq_id = file.readline().strip()
             if not seq_id:
-                break  # End of the file
+                break #End of the file
             sequence = file.readline().strip()
             plus_line = file.readline().strip()
             quality_str = file.readline().strip()
