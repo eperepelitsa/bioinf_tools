@@ -62,3 +62,45 @@ def check_quality(quality_str : str, quality_threshold : int | float) -> bool:
         avg_quality = 0
     return avg_quality >= quality_threshold
 
+
+def read_fastq(input_fastq : str) -> dict:
+    """
+    Reads FastQ files line by line to find
+    the sequence ID, the sequence and the quality string.
+
+    Arguments:
+    input_fastq: str
+
+    Returns dict.
+    """
+    seqs = {}
+    with open(input_fastq, 'r') as file:
+        while True:
+            seq_id = file.readline().strip()
+            if not seq_id:
+                break #End of the file
+            sequence = file.readline().strip()
+            plus_line = file.readline().strip()
+            quality_str = file.readline().strip()
+            if not seq_id.startswith('@') or not plus_line.startswith('+'):
+                raise ValueError("Only FastQ files are accepted")
+            seqs[seq_id] = (sequence, quality_str)
+    return seqs
+
+
+def write_fastq(output_fastq : str, filtered_seqs : dict) -> None:
+    """
+    Writes the filtered results in a separate file.
+
+    Arguments:
+    output_fastq: str
+    filtered_seqs: dict
+
+    Returns None.
+    """
+    with open(output_fastq, 'w') as file:
+        for seq_id, sequence, plus_line, quality_str in filtered_seqs:
+            file.write(f"{seq_id}\n")
+            file.write(f"{sequence}\n")
+            file.write(f"{plus_line}\n")
+            file.write(f"{quality_str}\n")
