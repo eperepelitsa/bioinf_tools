@@ -26,6 +26,8 @@ def check_gc(sequence : str, gc_min : int | float, gc_max : int | float) -> bool
     """
     gc_count = sequence.upper().count("G") + sequence.upper().count("C")
     gc_content = (gc_count/len(sequence)) * 100
+    if len(sequence) == 0:
+        gc_content = 0
     return gc_min <= gc_content <= gc_max
 
 
@@ -56,5 +58,7 @@ def check_quality(quality_str : str, quality_threshold : int | float) -> bool:
     """
     quality_scores = [ord(char) - 33 for char in quality_str]
     avg_quality = sum(quality_scores)/len(quality_scores)
+    if len(quality_scores) == 0:
+        avg_quality = 0
     return avg_quality >= quality_threshold
 
