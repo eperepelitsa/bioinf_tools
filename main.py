@@ -1,5 +1,5 @@
 from tools.dna_rna_tools import (is_nucleic_acid, transcribe, reverse,
-                                 complement, reverse_complement)
+                           complement, reverse_complement)
 from tools.fastqc_tools import (define, check_gc, check_length, check_quality,
                                 read_fastq, write_fastq)
 import os
@@ -43,12 +43,12 @@ def run_dna_rna_tools(*args : list[str]) -> list[str] | str:
     return results[0] if len(results) == 1 else results
 
 
-def filter_fastq(input_fastq : str, gc_bounds : tuple | int | float = (0, 100),
+def filter_fastq(input_fastq : str, gc_bounds : tuple | int | float = (0, 100), 
                  length_bounds : tuple | int | float = (0, 2**32),
                  quality_threshold : int | float = 0,
                  output_fastq : str | None) -> None:
     """
-    Filters FastQ sequences based on GC content, length, and quality,
+    Filters FastQ sequences based on GC content, length, and quality, 
     with user-defined bounds and thresholds.
 
     input_fastq: str
@@ -81,3 +81,4 @@ def filter_fastq(input_fastq : str, gc_bounds : tuple | int | float = (0, 100),
     if output_dir and not os.path.exists(output_dir):
         os.makedirs(output_dir)
     write_fastq(output_fastq, filtered_seqs)
+
