@@ -1,7 +1,15 @@
 import os
 import re
 
-def convert_multiline_fasta_to_one_line(input_fasta : str, output_fasta : str = None):
+def convert_multiline_fasta_to_one_line(input_fasta : str, output_fasta : str | None = None) -> None:
+    """
+    Converts multiline sequences in FASTA files to a single line.
+
+    input_fasta: str
+    output_fasta: str / None
+
+    Returns None.
+    """
     if output_fasta is None:
         base_input_name = os.path.basename(input_fasta)
         name, my_extension = os.path.splitext(base_input_name)
@@ -28,7 +36,15 @@ def convert_multiline_fasta_to_one_line(input_fasta : str, output_fasta : str = 
             output_file.write(f"{''.join(sequence)}\n")
 
 
-def parse_blast_output(input_file, output_file):
+def parse_blast_output(input_file : str, output_file : str) -> None:
+    """
+    Parses Blast output to find the description of the best match.
+
+    input_file: str
+    output_file: str
+
+    Returns None.
+    """
     if os.path.abspath(input_file) == os.path.abspath(output_file):
         raise ValueError("The input file cannot be overwritten.")
     if os.path.exists(output_file):
