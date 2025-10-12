@@ -47,7 +47,7 @@ def check_length(sequence : str, len_min : int | float, len_max : int | float) -
 
 def check_quality(quality_str : str, quality_threshold : int | float) -> bool:
     """
-    Calculates average sequence quality and checks 
+    Calculates average sequence quality and checks
     whether it's acceptable depending on the threshold.
 
     Arguments:
