@@ -5,7 +5,7 @@ Bioinformatic tools for work with DNA/RNA sequences and FastQ files.
 To run bioinf_tools, you need to clone it from the repository:
 ```
 git clone https://github.com/eperepelitsa/bioinftools.git
-cd biotools
+cd bioinf_tools
 ```
 
 ## Usage
@@ -33,7 +33,7 @@ Function `run_dna_rna_tools` accepts 1 or more sequences and 1 of the following 
   ```
 
 ### Filtration of FastQ sequences
-Function `filter_fastq` filters FastQ sequences depending on:
+Function `filter_fastq` accepts files containing FastQ sequences and filters them depending on:
 - GC content
   ```
   filter_fastq(sequences, gc_bounds = (40, 60))
@@ -46,6 +46,20 @@ Function `filter_fastq` filters FastQ sequences depending on:
   ```
   filter_fastq(sequences, quality_threshold = 20)
   ```
+The filtered sequences are saved in a separate file.
+
+### Conversion of multiline sequences in FASTA files
+Function `convert_multiline_fasta_to_oneline` converts multiline sequences in FASTA files to a single line.
+The converted output is saved to a separate file.
+```
+convert_multiline_fasta_to_oneline("input.fasta", "input_filtered.fasta")
+```
+### Parsing of Blast output to find the best match
+Function `parse_blast_output` finds the best match for each query in the Blast output.
+Best matches are saved to a separate file.
+```
+parse_blast_output("blast_output.txt", "best_matches.txt")
+```
 
   ## Contacts
   - Author: Elizaveta Perepelitsa
