@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import Union, Tuple, Dict, Any
 from Bio import SeqIO
-from Bio.SeqUtils import GC
+from Bio.SeqUtils import gc_fraction
 from Bio.SeqRecord import SeqRecord
 
 class BiologicalSequence(ABC):
@@ -74,6 +74,12 @@ class NucleicAcidSequence(BiologicalSequence):
         Returns a reverse complementary sequence
         """
         return self.reverse().complement()
+    
+    def reverse(self) -> 'NucleicAcidSequence':
+        """
+        Returns a reversed sequence
+        """
+        return self.__class__(self._sequence[::-1])
 
 class DNASequence(NucleicAcidSequence):
     """
@@ -171,7 +177,8 @@ def calculate_quality(record: SeqRecord) -> float:
 def filter_fastq(input_file: str, output_file: str,
                  gc_bounds: Union[Tuple[float, float], float, int] = (0, 100),
                  length_bounds: Union[Tuple[int, int], float, int] = (0, 2**32),
-                 quality_threshold: Union[float, int] = 0) -> Dict[str, int]:
+                 quality_threshold: Union[float, int] = 0,
+                 log_file: str = 'filter_fastq.log') -> Dict[str, int]:
     """
     Filters FastQ sequences based on GC content, length, and quality, 
     with user-defined bounds and thresholds.
@@ -202,7 +209,7 @@ def filter_fastq(input_file: str, output_file: str,
                 if not (len_min <= seq_len <= len_max):
                     stats['filtered_length'] += 1
                     continue
-                gc_content = GC(record.seq)
+                gc_content = gc_fraction(record.seq) * 100
                 if not (gc_min <= gc_content <= gc_max):
                     stats['filtered_gc'] += 1
                     continue
@@ -211,5 +218,5 @@ def filter_fastq(input_file: str, output_file: str,
                     stats['filtered_quality'] += 1
                     continue
                 SeqIO.write(record, out_handle, 'fastq')
-                stats ['passed'] += 1
+                stats['passed'] += 1
     return stats
